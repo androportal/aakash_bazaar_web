@@ -1,0 +1,99 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300);
+html,body{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: #F8F8F8;
+	font-family: 'Ubuntu', sans-serif;
+}
+#header-wrapper{
+	max-width: 940px;
+	margin: 30px auto 0;
+	padding: 30px 20px;
+	background: #FFFFFF;
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-o-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+}
+.nav{
+	margin-top: 11px;
+	font-weight: bold;
+}
+.nav li a:hover, .nav li .active a:hover{
+	background: none;
+	opacity: 1;
+	-moz-transition: opacity .7s ease-out 0s;
+	-webkit-transition: opacity .7s ease-out 0s;
+	-o-transition: opacity .7s ease-out 0s;
+	transition: opacity .7s ease-out 0s;
+}
+.nav-pills a, .nav-pills li a:focus,.nav-pills .active a, .nav-pills .active a:hover, .nav-pills .active a:focus{
+	background: #FFFFFF;
+	color: #000000;
+	opacity: .5;
+	margin-left: 15px;
+}
+#jumbotron{
+	max-width: 920px;
+	margin: 0 auto;
+	padding: 0 30px;
+	background: url("../img/back.jpg");
+	background-size: cover;
+	height: 500px;
+	position: relative;
+-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-o-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+}
+#content-wrapper{
+	max-width: 940px;
+	margin: 0 auto;
+	color: #FFFFFF;
+}
+#main-content{
+	padding: 125px  0;
+	font-family: 'Ubuntu', sans-serif;
+}
+#footer-wrapper{
+	background: #FFFFFF;
+	max-width: 920px;
+	margin: 0 auto 30px;
+	padding: 40px 30px;
+	font-weight: bold;
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-o-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+}
+.clearfix{
+	clear: both;
+}
+/* Page Styles */
+#page-wrapper{
+	background: url("../img/back.jpg");
+	background-size: cover;
+	padding: 50px 0;
+	max-width: 980px;
+	margin: 0 auto;
+}
+#page{
+	max-width: 860px;
+	margin: 0 auto;
+	background: #FFFFFF;
+	padding: 10px 40px;
+	height: auto;
+	min-height: 400px;
+}
+/* Other Styles*/
+.imp{
+	border: 1px dashed lightgrey;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	margin-left: 0 !important;
+	padding: 20px;
+}
