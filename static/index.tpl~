@@ -10,7 +10,7 @@
 						<input type="submit" value="Login" class="btn btn-primary btn-large span10">
 					</form>
 				</div>
-				<div class="span6 visible-desktop pull-right">
+				<div class="span6 hidden-phone pull-right">
 					<h2>Dont have an bazaar account yet ?</h2>
 					<form action="/register" method="POST" name="reg_form">
 						<div class="controls controls-row">

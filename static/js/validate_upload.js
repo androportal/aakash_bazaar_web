@@ -12,6 +12,9 @@ screenshot2 = document.upload_form.screenshot2;
 screenshot3 = document.upload_form.screenshot3;
 screenshots = document.getElementById('screenshots');
 apk = document.upload_form.apk;
+// for ajax check
+error = document.getElementById('error');
+// global var
 errors = 0;
 // background of input upon error
 function xcolor(x){
@@ -79,13 +82,44 @@ function validate(){
 		xcolor(apk);
 	}
 	// form submit
-	if(errors == 0){
+	if(errors == 0 && error.innerHTML == ''){
 		document.upload_form.submit();
 	}
 }// validate func. ends
-package_name.onfocus = function(){ ncolor(package_name); }
+package_name.onfocus = function(){ ncolor(package_name); error.innerHTML='';}
 apk_name.onfocus = function(){ ncolor(apk_name); }
 source_code.onfocus = function(){ ncolor(source_code); }
 summary.onfocus = function(){ ncolor(summary); }
 description.onfocus = function(){ ncolor(description); }
 apk.onchange = function(){ ncolor(apk); }
+
+// ajax call for verifying the package_name existence
+package_name.onblur = function(){ loadXMLDoc() }
+function loadXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    	if(xmlhttp.responseText == "exists")
+    	{
+    		error.innerHTML="(Package name already exists)";
+    	}
+    	else
+    	{
+    		error.innerHTML='';
+    	}
+    }
+}
+xmlhttp.open("GET","/check?package_name="+package_name.value,true);
+xmlhttp.send();
+}

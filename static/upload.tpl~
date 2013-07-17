@@ -5,7 +5,7 @@
 			<p><small>All fields marked with * are compulsary</small></p>
 			<div class="row-fluid">
 				<form action="/upload" method="POST" enctype="multipart/form-data" name="upload_form">
-					<label>Package Name *</label>
+					<label>Package Name * <small id="error">(haii)</small></label>
 					<input type="text" name="package_name" class="span8">
 					<label>Name of APK *</label>
 					<input type="text" name="apk_name" class="span8">
@@ -57,7 +57,6 @@
 					</div><!-- ./imp -->
 				</form>
 			</div>
-
 		</div> <!-- ./page -->
 	</div><!-- ./page-wrapper -->
 	<script type="text/javascript" src="/static/js/validate_upload.js"></script>

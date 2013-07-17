@@ -12,7 +12,7 @@ body{
 	margin: 30px auto 0;
 	padding: 30px 20px;
 	background: #FFFFFF;
-	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.13);
 	-webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
 	-o-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
@@ -34,6 +34,10 @@ body{
 	color: #000000;
 	opacity: .5;
 	margin-left: 15px;
+	-moz-transition: opacity .7s ease-out 0s;
+	-webkit-transition: opacity .7s ease-out 0s;
+	-o-transition: opacity .7s ease-out 0s;
+	transition: opacity .7s ease-out 0s;
 }
 #jumbotron{
 	max-width: 920px;
@@ -43,7 +47,7 @@ body{
 	background-size: cover;
 	height: 500px;
 	position: relative;
--moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
 	-webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
 	-o-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.13);
@@ -96,4 +100,7 @@ body{
 	border-radius: 5px;
 	margin-left: 0 !important;
 	padding: 20px;
+}
+#error{
+
 }
