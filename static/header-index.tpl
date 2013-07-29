@@ -6,23 +6,17 @@
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
 	<link href="/static/css/style.css" rel="stylesheet" media="screen">
-<<<<<<< HEAD
-=======
 	<link href="/static/css/style-responsive.css" rel="stylesheet" media="screen">
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 </head>
 
 <body>
 	<div id="header-wrapper">
 		<div id="header-inner">
 		<h3 class="pull-left">Aakash Bazaar</h3>
-<<<<<<< HEAD
 		<a id="phone-button" class="hidden-desktop pull-right" data-toggle="collapse" data-target=".nav-collapse">
 			<img src="/static/img/icon-menu.png" width="30px">
-=======
 		<a id="phone-button" class="btn btn-inverse hidden-desktop pull-right" data-toggle="collapse" data-target=".nav-collapse">
 				Menu <i class="icon-align-justify icon-white"></i>
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 		</a>
 		<div class="nav-collapse collapse">
 			<ul class="nav nav-pills pull-right">
@@ -35,7 +29,3 @@
 		<div class="clearfix"></div>
 		</div> <!-- ./header-inner -->
 	</div> <!-- ./header-wrapper -->
-<<<<<<< HEAD
-=======
-
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d

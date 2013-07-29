@@ -14,27 +14,36 @@ key = 'tm4k$8Dnb1mG!K$'
 def server_file(filepath):
 	return static_file(filepath, root='./static')
 
+#Serve Favicon
+@app.get('/favicon.ico')
+def get_favicon():
+    return static_file('favicon.ico',  root='./static/')
+
 @app.route('/')
 def HomePage():
 	if not user():
-		return template('./static/index.tpl')
+		return template('./static/'+device()+'/index.tpl')
+
+@app.route('/')
+def HomePage():
+	if not user():
+		return template('./static/'+device()+'/index.tpl')
 	else:
 		redirect('/dashboard')
 
 @app.route('/about')
 def About():
 	if not user():
-		return template('./static/about.tpl')
+		return template('./static/'+device()+'/about.tpl')
 	else:
 		redirect('/dashboard')
 		
 @app.route('/contact')
 def Contact():
 	if not user():
-		return template('./static/contact.tpl')
+		return template('./static/'+device()+'/contact.tpl')
 	else:
 		redirect('/dashboard')
-		
 ###############################################################################
 #####     Login Section     ###################################################
 ###############################################################################
@@ -53,7 +62,7 @@ def login_form():
 		template_values = {
 			'message': msg
 		}
-		return template('./static/login.tpl',template_values)
+		return template('./static/'+device()+'/login.tpl',template_values)
 	else:
 		redirect('/dashboard')
 
@@ -84,7 +93,7 @@ def register_form():
 		template_values={
 			'message': message
 		}
-		return template('./static/register.tpl',template_values)
+		return template('./static/'+device()+'/register.tpl',template_values)
 	else:
 		redirect('/dashboard')
 
@@ -111,7 +120,7 @@ def register_submit(db):
 @app.get('/upload')
 def register_form():
 	if user():
-		return template('./static/upload.tpl')
+		return template('./static/'+device()+'/upload.tpl')
 	else:
 		redirect('/')
 
@@ -156,6 +165,7 @@ def upload_submit(db):
 		#Saving screenshots
 		if screenshot1:
 			name, ext = os.path.splitext(screenshot1.filename)
+			screenshot1.save(str(file_path+package_name+'.1'+ext))
 			screenshot1.save(file_path+package_name+'.1'+ext)
 		if screenshot2:
 			name, ext = os.path.splitext(screenshot2.filename)
@@ -184,9 +194,7 @@ def Check(db):
 		return 'exists'
 	else:
 		return 'valid'
-		
-	
-	
+
 ###############################################################################
 #####     User Section      ###################################################
 ###############################################################################
@@ -217,7 +225,7 @@ def profile_form(db):
 			'password':row['password'],
 			'message': message
 		}
-		return template('./static/profile.tpl',template_values)
+		return template('./static/'+device()+'/profile.tpl',template_values)
 	else:
 		redirect('/')
 
@@ -247,6 +255,7 @@ def profile_submit(db):
 	else:
 		redirect('/')
 
+
 ###############################################################################
 #####     User Dashboard     ##################################################
 ###############################################################################
@@ -274,14 +283,27 @@ def Dashboard(db):
 				apk.append(row['apk'])
 				category.append(row['category'])
 		template_values = {
+			'email': user(),
 			'count': count,
 			'package': package,
 			'apk': apk,
 			'category': category,
 			'message': message
 		}
-		return template('./static/dashboard.tpl',template_values)
+		return template('./static/'+device()+'/dashboard.tpl',template_values)
 	else:
 		redirect('/')
 
-run(app, host='localhost', port=8080, debug=True)
+
+
+###############################################################################
+#####     User Agent Detection     ############################################
+###############################################################################
+def device():
+	agent = request.environ.get('HTTP_USER_AGENT')
+	if 'mobile' in agent.lower():
+		return 'mobile'
+	else:
+		return ''
+
+run(app, host='10.101.201.141', port=8080, debug=True)
