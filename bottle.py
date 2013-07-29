@@ -471,7 +471,11 @@ class Route(object):
         #: Additional keyword arguments passed to the :meth:`Bottle.route`
         #: decorator are stored in this dictionary. Used for route-specific
         #: plugin configuration and meta-data.
+<<<<<<< HEAD
+        self.config = ConfigDict().load_dict(config)
+=======
         self.config = ConfigDict(config)
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 
     def __call__(self, *a, **ka):
         depr("Some APIs changed to return Route() instances instead of"\
@@ -544,6 +548,16 @@ class Route(object):
             to recover the original function before inspection. '''
         return getargspec(self.get_undecorated_callback())[0]
 
+<<<<<<< HEAD
+    def get_config(key, default=None):
+        ''' Lookup a config field and return its value, first checking the
+            route.config, then route.app.config.'''
+        for conf in (self.config, self.app.conifg):
+            if key in conf: return conf[key]
+        return default
+
+=======
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
     def __repr__(self):
         cb = self.get_undecorated_callback()
         return '<%s %r %r>' % (self.method, self.rule, cb)
@@ -569,6 +583,15 @@ class Bottle(object):
 
     def __init__(self, catchall=True, autojson=True):
 
+<<<<<<< HEAD
+        #: A :class:`ConfigDict` for app specific configuration.
+        self.config = ConfigDict()
+        self.config._on_change = functools.partial(self.trigger_hook, 'config')
+        self.config.meta_set('autojson', 'validate', bool)
+        self.config.meta_set('catchall', 'validate', bool)
+        self.config['catchall'] = catchall
+        self.config['autojson'] = autojson
+=======
         #: A :class:`ConfDict` for app specific configuration.
         self.conf = ConfDict()
         self.conf._on_change = functools.partial(self.trigger_hook, 'config')
@@ -581,6 +604,7 @@ class Bottle(object):
         self.config = ConfigDict()
         self.config.autojson = autojson
         self.config.catchall = catchall
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 
         #: A :class:`ResourceManager` for application files
         self.resources = ResourceManager()
@@ -591,12 +615,20 @@ class Bottle(object):
 
         # Core plugins
         self.plugins = [] # List of installed plugins.
+<<<<<<< HEAD
+        if self.config['autojson']:
+=======
         if self.config.autojson:
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
             self.install(JSONPlugin())
         self.install(TemplatePlugin())
 
     #: If true, most exceptions are caught and returned as :exc:`HTTPError`
+<<<<<<< HEAD
+    catchall = DictProperty('config', 'catchall')
+=======
     catchall = DictProperty('conf', 'catchall')
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 
     __hook_names = 'before_request', 'after_request', 'app_reset', 'config'
     __hook_reversed = 'after_request'
@@ -1660,9 +1692,17 @@ class LocalResponse(BaseResponse):
     _headers     = local_property('response_headers')
     body         = local_property('response_body')
 
+<<<<<<< HEAD
+
 Request = BaseRequest
 Response = BaseResponse
 
+
+=======
+Request = BaseRequest
+Response = BaseResponse
+
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 class HTTPResponse(Response, BottleException):
     def __init__(self, body='', status=None, headers=None,
                  header=None, **more_headers):
@@ -1686,6 +1726,10 @@ class HTTPResponse(Response, BottleException):
 
     output = property(_output, _output, doc='Alias for .body')
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 class HTTPError(HTTPResponse):
     default_status = 500
     def __init__(self, status=None, body=None, exception=None, traceback=None,
@@ -1704,6 +1748,10 @@ class HTTPError(HTTPResponse):
 
 class PluginError(BottleException): pass
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 class JSONPlugin(object):
     name = 'json'
     api  = 2
@@ -1862,7 +1910,10 @@ class MultiDict(DictMixin):
     getlist = getall
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 class FormsDict(MultiDict):
     ''' This :class:`MultiDict` subclass is used to store request form data.
         Additionally to the normal dict-like item access methods (which return
@@ -1982,6 +2033,12 @@ class WSGIHeaderDict(DictMixin):
     def __contains__(self, key): return self._ekey(key) in self.environ
 
 
+<<<<<<< HEAD
+
+class ConfigDict(dict):
+    ''' A dict-like configuration storage with additional support for
+        namespaces, validators, meta-data, on_change listeners and more.
+=======
 class ConfDict(dict):
     ''' A dict-subclass with some extras.
 
@@ -1990,25 +2047,72 @@ class ConfDict(dict):
         >>> c.update('some.namespace', key='some value')
         >>> print(c)
         {'key': 'value', 'some.namespace.key':'some value'}
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
     '''
 
     __slots__ = ('_meta', '_on_change')
 
+<<<<<<< HEAD
+    def __init__(self, *a, **ka):
+        self._meta = {}
+        self._on_change = lambda name, value: None
+        if a or ka:
+            depr('Constructor does no longer accept parameters.')
+            self.update(*a, **ka)
+
+    def load_config(self, filename):
+        ''' Load values from an *.ini style config file.
+
+            If the config file contains sections, their names are used as
+            namespaces for the values within. The two special sections
+            ``DEFAULT`` and ``bottle`` refer to the root namespace (no prefix).
+        '''
+=======
     def __init__(self):
         self._meta = {}
         self._on_change = lambda name, value: None
 
     def load_config(self, filename):
         ''' Load an *.ini style config file.'''
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
         conf = ConfigParser()
         conf.read(filename)
         for section in conf.sections():
             for key, value in conf.items(section):
+<<<<<<< HEAD
+                if section not in ('DEFAULT', 'bottle'):
+                    key = section + '.' + key
+                self[key] = value
+        return self
+
+    def load_dict(self, source, namespace=''):
+        ''' Load values from a dictionary structure. Nesting can be used to
+            represent namespaces.
+            
+            >>> c.load_dict({'some': {'namespace': {'key': 'value'} } })
+            {'some.namespace.key': 'value'}            
+        '''
+        for key, value in source.items():
+            if isinstance(key, str):
+                nskey = (namespace + '.' + key).strip('.')
+                if isinstance(value, dict):
+                    self.load_dict(value, namespace=nskey)
+                else:
+                    self[nskey] = value
+            else:
+                raise TypeError('Key has type %r (not a string)' % type(key))
+        return self
+
+    def update(self, *a, **ka):
+        ''' If the first parameter is a string, all keys are prefixed with this
+            namespace. Apart from that it works just as the usual dict.update().
+=======
                 self['%s.%s' % (section, key)] = value
 
     def update(self, *a, **ka):
         ''' If the first parameter is a string, all keys are prefixed with this
             string. Apart from that it works just as the usual dict.update().
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
             Example: ``update('some.namespace', key='value')`` '''
         prefix = ''
         if a and isinstance(a[0], str):
@@ -2023,18 +2127,28 @@ class ConfDict(dict):
 
     def __setitem__(self, key, value):
         if not isinstance(key, str):
+<<<<<<< HEAD
+            raise TypeError('Key has type %r (not a string)' % type(key))
+        value = self.meta_get(key, 'filter', lambda x: x)(value)
+=======
             raise TypeError('Keys must be strings')
         filtr = self.meta_get(key, 'filter')
         if filtr is not None:
             value = filtr(value)
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
         if key in self and self[key] is value:
             return
         self._on_change(key, value)
         dict.__setitem__(self, key, value)
 
     def __delitem__(self, key):
+<<<<<<< HEAD
+        self._on_change(key, None)
+        dict.__delitem__(self, key)
+=======
         dict.__delitem__(self, key)
         self._on_change(key, value)
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 
     def meta_get(self, key, metafield, default=None):
         ''' Return the value of a meta field for a key. '''
@@ -2051,6 +2165,11 @@ class ConfDict(dict):
         ''' Return an iterable of meta field names defined for a key. '''
         return self._meta.get(key, {}).keys()
 
+<<<<<<< HEAD
+    # Deprecated ConfigDict features
+    def __getattr__(self, key):
+        depr('Attribute access is deprecated.') #0.12
+=======
 
 class ConfigDict(dict):
     ''' A dict-subclass with some extras: You can access keys like attributes.
@@ -2066,11 +2185,18 @@ class ConfigDict(dict):
     '''
 
     def __getattr__(self, key):
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
         if key not in self and key[0].isupper():
             self[key] = ConfigDict()
         return self.get(key)
 
     def __setattr__(self, key, value):
+<<<<<<< HEAD
+        if key in self.__slots__:
+            return dict.__setattr__(self, key, value)
+        depr('Attribute assignment is deprecated.') #0.12
+=======
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
         if hasattr(dict, key):
             raise AttributeError('Read-only attribute.')
         if key in self and self[key] and isinstance(self[key], ConfigDict):
@@ -2081,10 +2207,19 @@ class ConfigDict(dict):
         if key in self: del self[key]
 
     def __call__(self, *a, **ka):
+<<<<<<< HEAD
+        depr('Calling ConfDict is deprecated. Use the update() method.') #0.12
+        self.update(*a, **ka)
+        return self
+
+
+
+=======
         for key, value in dict(*a, **ka).items(): setattr(self, key, value)
         return self
 
 
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 class AppStack(list):
     """ A stack-like list. Calling it returns the head of the stack. """
 

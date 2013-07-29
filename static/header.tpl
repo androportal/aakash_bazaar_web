@@ -6,7 +6,10 @@
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
 	<link href="/static/css/style.css" rel="stylesheet" media="screen">
+<<<<<<< HEAD
+=======
 	<link href="/static/css/style-responsive.css" rel="stylesheet" media="screen">
+>>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 </head>
 
 <body>

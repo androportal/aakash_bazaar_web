@@ -14,52 +14,35 @@ key = 'tm4k$8Dnb1mG!K$'
 def server_file(filepath):
 	return static_file(filepath, root='./static')
 
-<<<<<<< HEAD
-#Serve Favicon
-@app.get('/favicon.ico')
-def get_favicon():
-    return static_file('favicon.ico',  root='./static/')
-
 @app.route('/')
 def HomePage():
 	if not user():
-		return template('./static/'+device()+'/index.tpl')
-=======
-@app.route('/')
-def HomePage():
-	if not user():
-		return template('./static/index.tpl')
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
+		if device() == "mobile":
+			return template('./static/mobile/index.tpl')
+		else:
+			return template('./static/index.tpl')
 	else:
-		redirect('/dashboard')
+		if device() == "mobile":
+			return template('./static/mobile/dashboard.tpl')
+		else:
+			redirect('/dashboard')
 
 @app.route('/about')
 def About():
 	if not user():
-<<<<<<< HEAD
-		return template('./static/'+device()+'/about.tpl')
-=======
 		return template('./static/about.tpl')
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 	else:
 		redirect('/dashboard')
 		
 @app.route('/contact')
 def Contact():
 	if not user():
-<<<<<<< HEAD
-		return template('./static/'+device()+'/contact.tpl')
-	else:
-		redirect('/dashboard')
-
-
-
-=======
 		return template('./static/contact.tpl')
 	else:
 		redirect('/dashboard')
-		
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
+
+
+
 ###############################################################################
 #####     Login Section     ###################################################
 ###############################################################################
@@ -78,11 +61,7 @@ def login_form():
 		template_values = {
 			'message': msg
 		}
-<<<<<<< HEAD
-		return template('./static/'+device()+'/login.tpl',template_values)
-=======
 		return template('./static/login.tpl',template_values)
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 	else:
 		redirect('/dashboard')
 
@@ -103,11 +82,8 @@ def login_submit(db):
 	else:
 		redirect('/login?msg=xlog')
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 ###############################################################################
 #####     Register Section     ################################################
 ###############################################################################
@@ -118,11 +94,7 @@ def register_form():
 		template_values={
 			'message': message
 		}
-<<<<<<< HEAD
-		return template('./static/'+device()+'/register.tpl',template_values)
-=======
 		return template('./static/register.tpl',template_values)
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 	else:
 		redirect('/dashboard')
 
@@ -140,25 +112,17 @@ def register_submit(db):
 	else:
 		db.execute('INSERT INTO BazaarUsers (first_name, last_name, email, password) VALUES (%s,%s,%s,%s)',(first_name,last_name,email,password))
 	response.set_cookie('AakashBazaar',email,secret=key)
-	redirect('/dashboard')
-
-<<<<<<< HEAD
+	redirect('/')
 
 
-=======
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
+
 ###############################################################################
 #####     Upload Section      #################################################
 ###############################################################################
-
 @app.get('/upload')
 def register_form():
 	if user():
-<<<<<<< HEAD
-		return template('./static/'+device()+'/upload.tpl')
-=======
 		return template('./static/upload.tpl')
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 	else:
 		redirect('/')
 
@@ -182,7 +146,7 @@ def upload_submit(db):
 		screenshot2 = request.files.get('screenshot2')
 		screenshot3 = request.files.get('screenshot3')
 		apk = request.files.get('apk')
-	
+
 		#Creating directory(package_name) and dumping contents
 		save_path = '/tmp/{folder}'.format(folder=package_name)
 		os.makedirs(save_path)
@@ -203,11 +167,7 @@ def upload_submit(db):
 		#Saving screenshots
 		if screenshot1:
 			name, ext = os.path.splitext(screenshot1.filename)
-<<<<<<< HEAD
-			screenshot1.save(str(file_path+package_name+'.1'+ext))
-=======
 			screenshot1.save(file_path+package_name+'.1'+ext)
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 		if screenshot2:
 			name, ext = os.path.splitext(screenshot2.filename)
 			screenshot2.save(file_path+package_name+'.2'+ext)
@@ -235,13 +195,9 @@ def Check(db):
 		return 'exists'
 	else:
 		return 'valid'
-<<<<<<< HEAD
 
-=======
-		
-	
-	
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
+
+
 ###############################################################################
 #####     User Section      ###################################################
 ###############################################################################
@@ -272,11 +228,7 @@ def profile_form(db):
 			'password':row['password'],
 			'message': message
 		}
-<<<<<<< HEAD
-		return template('./static/'+device()+'/profile.tpl',template_values)
-=======
 		return template('./static/profile.tpl',template_values)
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 	else:
 		redirect('/')
 
@@ -306,17 +258,14 @@ def profile_submit(db):
 	else:
 		redirect('/')
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 ###############################################################################
 #####     User Dashboard     ##################################################
 ###############################################################################
 @app.get('/dashboard')
 def Dashboard(db):
-	if user():
+	if user() and device() == 'desktop':
 		#Fetching get-msg
 		message = request.query.getall('msg')
 		if not message:
@@ -338,18 +287,15 @@ def Dashboard(db):
 				apk.append(row['apk'])
 				category.append(row['category'])
 		template_values = {
-<<<<<<< HEAD
-			'email': user(),
-=======
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
 			'count': count,
 			'package': package,
 			'apk': apk,
 			'category': category,
 			'message': message
 		}
-<<<<<<< HEAD
-		return template('./static/'+device()+'/dashboard.tpl',template_values)
+		return template('./static/dashboard.tpl',template_values)
+	elif user() and device() == 'mobile':
+		return template('./static/mobile/dashboard.tpl')
 	else:
 		redirect('/')
 
@@ -360,16 +306,13 @@ def Dashboard(db):
 ###############################################################################
 def device():
 	agent = request.environ.get('HTTP_USER_AGENT')
-	if 'mobile' in agent.lower():
-		return 'mobile'
+	if "mobile" in agent.lower():
+		return "mobile"
 	else:
-		return ''
+		return "desktop"
+
+@app.route('/test')
+def Test():
+	return template('./static/mobile/index.tpl')
 
 run(app, host='10.101.201.141', port=8080, debug=True)
-=======
-		return template('./static/dashboard.tpl',template_values)
-	else:
-		redirect('/')
-
-run(app, host='localhost', port=8080, debug=True)
->>>>>>> 58302ba1de43d605a67854468f14a5adb955602d
